@@ -4,7 +4,7 @@
 	var app = {
 
 		init : function(){
-			this.getArticle('/alice.md');
+			this.getArticle('/example.md');
 			this.getMenu();
 		},
 
@@ -12,13 +12,13 @@
 		// Pour récupérer et convertir article :
 
 		getArticle : function(articlePath) {
-			$.ajax('http://192.168.1.40:1337' + articlePath)
-			.done(this.getArticleDone)
+			$.ajax('http://localhost:2000' + articlePath)
+			.done(this.convertAndDisplayArticle)
 			.fail(this.requestFail)
 			.always(this.requestAlways)
 		},
 
-		getArticleDone : function(article) {
+		convertAndDisplayArticle : function(article) {
 			var converter = new showdown.Converter();
 			var articleHtml = converter.makeHtml(article);
 			$("#md").html(articleHtml);
@@ -28,18 +28,19 @@
 		// Pour récupérer menu :
 
 		getMenu : function() {
-			$.ajax('http://192.168.1.40:1337/menu.json')
-			.done(this.getMenuDone)
+			$.ajax('http://localhost:2000/menu.json')
+			.done(this.displayMenu)
 			.fail(this.requestFail)
 			.always(this.requestAlways)
 		},
 
-		getMenuDone : function(response) {
+		displayMenu : function(response) {
 			var len = response.menu.length;
 
 			for (var i = 0; i < len; i++) {
 				$('#menu').append('<div><button class="ui basic purple button" data-path="' + response.menu[i].path + '" >' + response.menu[i].title + '</button></div>');
 			}
+
 			app.listeners();
 		},
 
