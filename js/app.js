@@ -4,42 +4,57 @@
 	var app = {
 
 		init : function(){
-			this.getArticle();
+			this.getArticle('/alice.md');
 			this.getMenu();
 		},
-		
-		// Pour récupérer et convertir article Alice :
 
-		getArticle : function() {
-			$.ajax('http://192.168.1.21:1337/alice.md')
+		
+		// Pour récupérer et convertir article :
+
+		getArticle : function(articlePath) {
+			$.ajax('http://192.168.1.40:1337' + articlePath)
 			.done(this.getArticleDone)
 			.fail(this.requestFail)
 			.always(this.requestAlways)
 		},
 
-		getArticleDone : function(articleAlice) {
+		getArticleDone : function(article) {
 			var converter = new showdown.Converter();
-			var articleHtml = converter.makeHtml(articleAlice);
+			var articleHtml = converter.makeHtml(article);
 			$("#md").html(articleHtml);
 		},
+
 
 		// Pour récupérer menu :
 
 		getMenu : function() {
-			$.ajax('http://192.168.1.21:1337/menu.json')
+			$.ajax('http://192.168.1.40:1337/menu.json')
 			.done(this.getMenuDone)
 			.fail(this.requestFail)
 			.always(this.requestAlways)
 		},
 
 		getMenuDone : function(response) {
-			console.log(response.menu[0])
 			var len = response.menu.length;
 
 			for (var i = 0; i < len; i++) {
-				$("#menu").append('<h4> <a href="' + response.menu[i].path + '">' + response.menu[i].title + '</a></h4>');
+				$('#menu').append('<div><button class="ui basic purple button" data-path="' + response.menu[i].path + '" >' + response.menu[i].title + '</button></div>');
 			}
+			app.listeners();
 		},
+
+		
+		// Pour naviguer entre les articles : 
+		
+		listeners : function(){
+			$('button').on('click', this.getArticlePath).bind(this);
+		},
+
+		getArticlePath : function() {
+			var articlePath = ($(this).data('path'));
+			app.getArticle(articlePath);
+		},
+
 
 		// Fonctions communes requêtes :
 
