@@ -54,16 +54,17 @@
 			for (var i = 0; i < len; i++) {
 				if (splitArticle[i].charAt(0) === '#' && splitArticle[i].charAt(1) === ' ') {
 					var currentTitle = (splitArticle[i]);
+
 					var currentConvertedTitle = converter.makeHtml(currentTitle);
 					$('#displayCurrentTitle').html(currentConvertedTitle);
 					var textTitle = $('h1').text();
-					$('#inputNewTitle').val(textTitle);
+					$('#inputNewTitle').val(currentTitle);
 				}
 			}
 
 			// Pour afficher le contenu dans le textArea
 			$('textarea').text("");
-			for (var i = 1; i < len; i++) {
+			for (var i = 2; i < len; i++) {
 				$('textarea').append(splitArticle[i] + "\n");
 			};
 
