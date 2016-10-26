@@ -62,6 +62,7 @@
 			}
 
 			// Pour afficher le contenu dans le textArea
+			$('textarea').text("");
 			for (var i = 1; i < len; i++) {
 				$('textarea').append(splitArticle[i] + "\n");
 			};
