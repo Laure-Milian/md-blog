@@ -44,7 +44,6 @@
 		},
 
 		displayInfoArticle : function(response) {
-			console.log(response);
 			//Markdown converter (showdown)
 			var converter = new showdown.Converter();
 
@@ -73,21 +72,26 @@
 
 
 		modifyArticle : function() {
-			this.newTitleArticle = $('#inputNewTitle').val();
-			this.newContentArticle = $('textarea').val();
+			var newTitleArticle = $('#inputNewTitle').val();
+			var newContentArticle = $('textarea').val();
+			var pathArticle = $("select option:selected").val();
 
 			$.ajax({
-				url: 'http://localhost:2000/',
+				url: this.endpoint,
 				type: 'POST',
 				dataType: 'html',
-				data: {title: xxxx, path: xxxx, content: xxxx }
+				data: {title: newTitleArticle, path: pathArticle, content: newContentArticle}
 			})
-			.done(this.done)
+			.done(this.requestDone)
 			.fail(this.fail)
 		},
 
 
 		// Communs à toutes les requêtes Ajax
+
+		requestDone : function() {
+			console.log("requete envoyée");
+		},
 
 		requestFail : function() {
 			console.log("fail"); // alert utilisateur
