@@ -34,8 +34,8 @@
 			$('#btnModify').on('click', this.modifyArticle.bind(this));
 		},
 
-		// Récupérer toutes les infos concernant l'article
 
+		// Récupérer toutes les infos concernant l'article
 		getInfoArticle : function() {
 			var pathSelectedArticle = $('select option:selected').val();
 			$.ajax(this.endpoint + pathSelectedArticle)
@@ -64,30 +64,31 @@
 
 			// Pour afficher le contenu dans le textArea
 			$('textarea').text("");
-			for (var i = 2; i < len; i++) {
-				$('textarea').append(splitArticle[i] + "\n");
+			for (var i = 0; i < len; i++) {
+				if (splitArticle[i].charAt(0) !== '#' && splitArticle[i].charAt(1) !== ' ') {
+					$('textarea').append(splitArticle[i] + "\n");
+				}
 			};
 
 		},
 
+
 		// Pour modifier le titre & le contenu
 
-
 		modifyArticle : function() {
-			var newTitleArticle = $('#inputNewTitle').val();
-			var newContentArticle = $('textarea').val();
-			var pathArticle = $("select option:selected").val();
 
-			$.ajax({
-				url: this.endpoint,
-				type: 'POST',
+			var pathSelectedArticle = $('select option:selected').val();
+			var newContentArticle = $('#inputNewTitle').val() + "\n" + $('#textAreaEdit').val();
+			console.log(newContentArticle)
+
+			$.post({
+				url: this.endpoint + '/modifyArticle',
 				dataType: 'html',
-				data: {title: newTitleArticle, path: pathArticle, content: newContentArticle}
+				data: {path: pathSelectedArticle, content: newContentArticle}
 			})
 			.done(this.requestDone)
 			.fail(this.fail)
 		},
-
 
 		// Communs à toutes les requêtes Ajax
 
