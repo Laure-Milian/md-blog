@@ -19,6 +19,7 @@
 		},
 
 		convertAndDisplayArticle : function(article) {
+			console.log(article);
 			var converter = new showdown.Converter();
 			var articleHtml = converter.makeHtml(article);
 			$("#md").html(articleHtml);

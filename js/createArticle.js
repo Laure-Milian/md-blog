@@ -13,14 +13,16 @@
 		},
 
 		createArticle : function(){
-			var titleArticle = $('#inputTitle').val();
-			var pathArticle = '/' + titleArticle + '.md';
+			var titleArticle = '# ' + $('#inputTitle').val();
+			var pathArticle = '/' + $('#inputTitle').val() + '.md';
 			var contentArticle = $('#textAreaContent').val();
+			var titleForMenu = $('#inputTitle').val();
+			
 			if (titleArticle && contentArticle) {
 				$.post({
 					url : this.endpoint + '/createArticle',
 					dataType : 'html',
-					data: {title: titleArticle, path: pathArticle, content: contentArticle}
+					data: {title: titleArticle, path: pathArticle, content: contentArticle, titleForMenu : titleForMenu}
 				})
 				.done(this.requestDone)
 				.fail(this.requestFail)
