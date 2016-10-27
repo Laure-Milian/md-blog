@@ -96,7 +96,7 @@
 		},
 
 		requestFail : function() {
-			console.log("fail"); // alert utilisateur
+			console.log("failRequest"); // alert utilisateur
 		}
 	}
 

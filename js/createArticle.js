@@ -14,7 +14,7 @@
 
 		createArticle : function(){
 			var titleArticle = $('#inputTitle').val();
-			var pathArticle = titleArticle + '.md';
+			var pathArticle = '/' + titleArticle + '.md';
 			var contentArticle = $('#textAreaContent').val();
 			if (titleArticle && contentArticle) {
 				$.post({
@@ -26,7 +26,6 @@
 				.fail(this.requestFail)
 			}
 		},
-
 
 		// Communs à toutes les requêtes Ajax
 
